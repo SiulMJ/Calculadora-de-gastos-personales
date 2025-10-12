@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body>
+    <h2>Inicio</h2>
+    <div class="formulario">
+        <label >Ingrese el tipo de gestion</label>
+        <select class="Tipo">
+            <option value="">---</option>
+            <option value="ingreso">Ingreso</option>
+            <option value="egreso">egreso</option>
+        </select>
+        <label for="">categoria</label>
+        <select class="modo">
+            <option value="">---</option>
+            <option value="sueldo">sueldo</option>
+            <option value="servicios">servicios</option>
+            <option value="servicios de steaming">streaming</option>
+            <option value="deudas">deudas</option>
+            <option value="ingreso externo">ingreso externo</option>
+        </select>
+        <label>conseptos</label>
+        <input type="text" id="conseptos" plaseholder="conseptos">
+        <label>Dias</label>
+        <select class="dias">
+            {% for i in range(32)%}
+            <option value="{{i}}">{{i}}</option>
+            {%endfor%}
+        </select>
+        <label>mes</label>
+        <select class="mes">
+            <option>---</option>
+            <option value="enero">Enero</option>
+            <option value="febrero">Febrero</option>
+            <option value="marzo">Marzo</option>
+            <option value="abril">Abril</option>
+            <option value="mayo">Mayo</option>
+            <option value="junio">junio</option>
+            <option value="julio">julio</option>
+            <option value="agosto">Agosto</option>
+            <option value="septiembre">septiembre</option>
+            <option value="octubre">Octubre</option>
+            <option value="noviembre">Noviembre</option>
+            <option value="diciembre">Diciembre</option>
+        </select>
+        <label>Costo</label>
+        <Input type="text" id="costo" placeholder="Costo">
+        <button value="submit">Enviar</button>
+    </div>
+
+</body>
+</html>
