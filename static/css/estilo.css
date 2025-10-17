@@ -1,62 +1,138 @@
+/* ===== Estilo general ===== */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f4f8; 
+    font-family: "Segoe UI", Roboto, sans-serif;
+    background-color: #f4f6fb; /* un azul muy claro, más suave para la vista */
+    color: #2c3e50; /* un color más elegante que el gris estándar */
     margin: 0;
-    padding: 40px;
+    padding: 20px;
+    line-height: 1.6;
 }
 
+/* ===== Título ===== */
 h2 {
     text-align: center;
-    color: #2c3e50; 
     margin-bottom: 30px;
+    color: #34495e; /* ligeramente más oscuro que el fondo */
+    font-size: 2rem;
 }
 
+/* ===== Contenedor principal: formulario + tabla ===== */
 .formulario {
-    max-width: 500px;
+    display: flex;
+    gap: 30px;
+    max-width: 1200px;
     margin: 0 auto;
-    background-color: #fafbfd;
-    padding: 30px 40px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05); /* sombra suave */
+    flex-wrap: wrap; /* para que sea más responsivo */
 }
 
-.formulario label {
-    display: block;
-    margin-top: 20px;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #2c3e50;
+/* ===== Formulario ===== */
+form {
+    flex: 1;
+    min-width: 280px;
+    background: #fff;
+    padding: 25px 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08); /* sombra más suave y difusa */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.formulario select,
-.formulario input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #858484;
-    border-radius: 7px;
-    box-sizing: border-box;
-    transition: border-color 0.3s;
+form:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.12);
 }
 
-.formulario input[type="text"]:focus,
-.formulario select:focus {
-    border-color: #5dade2; 
+label {
+    font-weight: 600;
+    color: #34495e;
+}
+
+/* ===== Inputs y selects ===== */
+input[type="text"],
+select {
+    padding: 12px;
+    border: 1px solid #d1d5da;
+    border-radius: 8px;
+    font-size: 15px;
+    background-color: #fefefe;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus,
+select:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 5px rgba(74,144,226,0.3);
     outline: none;
 }
 
+/* ===== Botón ===== */
 button {
-    background-color: #3498db;
-    color: white;
-    padding: 12px 20px;
+    margin-top: 10px;
+    padding: 12px;
+    background-color: #4a90e2;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
     border: none;
-    border-radius: 7px;
-    font-size: 1rem;
+    border-radius: 8px;
     cursor: pointer;
-    margin-top: 20px;
-    transition: background-color 0.3s;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 button:hover {
-    background-color: #2980b9; 
+    background-color: #3b7cd4;
+    transform: translateY(-2px);
+}
+
+/* ===== Tabla ===== */
+table {
+    flex: 1;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+th {
+    background-color: #4a90e2;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+td {
+    background-color: #fff;
+    padding: 10px 12px;
+    border-bottom: 1px solid #e0e0e0;
+    transition: background-color 0.2s ease;
+}
+
+tr:hover td {
+    background-color: #f0f6ff;
+}
+
+td[colspan] {
+    text-align: center;
+    color: #7f8c8d;
+    font-style: italic;
+}
+
+/* ===== Responsividad ===== */
+@media (max-width: 900px) {
+    .formulario {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    table, tr, td, th {
+        font-size: 14px;
+    }
+
+    button, input[type="text"], select {
+        width: 100%;
+    }
 }

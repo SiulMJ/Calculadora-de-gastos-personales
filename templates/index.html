@@ -9,49 +9,91 @@
 <body>
     <h2>Inicio</h2>
     <div class="formulario">
-        <label >Ingrese el tipo de gestion</label>
-        <select class="Tipo">
-            <option value="">---</option>
-            <option value="ingreso">Ingreso</option>
-            <option value="egreso">egreso</option>
-        </select>
-        <label for="">categoria</label>
-        <select class="modo">
-            <option value="">---</option>
-            <option value="sueldo">sueldo</option>
-            <option value="servicios">servicios</option>
-            <option value="servicios de steaming">streaming</option>
-            <option value="deudas">deudas</option>
-            <option value="ingreso externo">ingreso externo</option>
-        </select>
-        <label>conseptos</label>
-        <input type="text" id="conseptos" plaseholder="conseptos">
-        <label>Dias</label>
-        <select class="dias">
-            {% for i in range(32)%}
-            <option value="{{i}}">{{i}}</option>
-            {%endfor%}
-        </select>
-        <label>mes</label>
-        <select class="mes">
-            <option>---</option>
-            <option value="enero">Enero</option>
-            <option value="febrero">Febrero</option>
-            <option value="marzo">Marzo</option>
-            <option value="abril">Abril</option>
-            <option value="mayo">Mayo</option>
-            <option value="junio">junio</option>
-            <option value="julio">julio</option>
-            <option value="agosto">Agosto</option>
-            <option value="septiembre">septiembre</option>
-            <option value="octubre">Octubre</option>
-            <option value="noviembre">Noviembre</option>
-            <option value="diciembre">Diciembre</option>
-        </select>
-        <label>Costo</label>
-        <Input type="text" id="costo" placeholder="Costo">
-        <button value="submit">Enviar</button>
-    </div>
+        <form action="{{ url_for('enviar') }}" method="POST">
+            <input type="hidden" name="id" value="{{ registro_actual[0] if registro_actual else '' }}">
 
+            <label>Tipo de gestión</label>
+            <select name="tipo">
+                <option value="">---</option>
+                <option value="ingreso" {% if registro_actual and registro_actual[1]=='ingreso' %}selected{% endif %}>Ingreso</option>
+                <option value="egreso" {% if registro_actual and registro_actual[1]=='egreso' %}selected{% endif %}>Egreso</option>
+            </select>
+
+            <label>Categoría</label>
+            <select name="modo">
+                <option value="">---</option>
+                <option value="sueldo" {% if registro_actual and registro_actual[2]=='sueldo' %}selected{% endif %}>Sueldo</option>
+                <option value="servicios" {% if registro_actual and registro_actual[2]=='servicios' %}selected{% endif %}>Servicios</option>
+                <option value="servicios de streaming" {% if registro_actual and registro_actual[2]=='servicios de streaming' %}selected{% endif %}>Streaming</option>
+                <option value="deudas" {% if registro_actual and registro_actual[2]=='deudas' %}selected{% endif %}>Deudas</option>
+                <option value="ingreso externo" {% if registro_actual and registro_actual[2]=='ingreso externo' %}selected{% endif %}>Ingreso externo</option>
+            </select>
+            
+            <label>Concepto</label>
+            <input type="text" name="conceptos" value="{{ registro_actual[3] if registro_actual else '' }}" placeholder="Concepto">
+
+            <label>Día</label>
+            <select name="dia">
+                {% for i in range(1, 32) %}
+                <option value="{{ i }}" {% if registro_actual and registro_actual[4]==i|string %}selected{% endif %}>{{ i }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Mes</label>
+            <select name="mes">
+                {% set meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'] %}
+                {% for m in meses %}
+                <option value="{{ m }}" {% if registro_actual and registro_actual[5]==m %}selected{% endif %}>{{ m|capitalize }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Costo</label>
+            <input type="text" name="costo" value="{{ registro_actual[6] if registro_actual else '' }}" placeholder="Costo">
+
+            <button type="submit" name="accion" value="enviar">Enviar</button>
+        </form>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>ID</th>
+        <th>Tipo</th>
+        <th>Categoría</th>
+        <th>Concepto</th>
+        <th>Día</th>
+        <th>Mes</th>
+        <th>Costo</th>
+    </tr>
+
+    {% for fila in datos %}
+    <tr>
+        <td>{{ fila[0] }}</td>
+        <td>{{ fila[1] }}</td>
+        <td>{{ fila[2] }}</td>
+        <td>{{ fila[3] }}</td>
+        <td>{{ fila[4] }}</td>
+        <td>{{ fila[5] }}</td>
+        <td>{{ fila[6] }}</td>
+        <td>
+            <form action="{{ url_for('enviar') }}" method="POST" style="display:inline;">
+                    <input type="hidden" name="accion" value="borrar">
+                    <input type="hidden" name="id" value="{{ fila[0] }}">
+                    <button type="submit" onclick="return confirm('¿Seguro que quieres borrar este registro?');">Borrar</button>
+             </form>
+        </td>
+        <td>
+            <form action="{{url_for('enviar')}}" method="POST">
+                    <input type="hidden" name="accion" value="borrar">
+                    <input type="hidden" name="id" value="{{ fila[0] }}">
+                    <button type="submit">editar</button>
+            </form>
+        </td>
+    </tr>
+    {% else %}
+    <tr>
+        <td colspan="8">No hay registros aún.</td>
+    </tr>
+    {% endfor %}
+</table>
+
+    </div>
 </body>
 </html>
