@@ -10,10 +10,18 @@ def conection():
 
 @app.route("/")
 def index():
+    id = request.args.get('id')  # Detecta si hay un id en la URL
     cur, con = conection()
-    cur.execute("select * from cuentas")
-    datos= cur.fetchall()
-    return render_template("index.html",datos = datos)
+
+    registro_actual = None
+    if id:  # Si hay id, busca el registro
+        cur.execute("SELECT * FROM cuentas WHERE id=?", (id,))
+        registro_actual = cur.fetchone()
+
+    cur.execute("SELECT * FROM cuentas")
+    datos = cur.fetchall()
+    return render_template("index.html", datos=datos, registro_actual=registro_actual)
+
 
 @app.route("/enviar", methods=['POST'])
 def enviar():
@@ -33,23 +41,17 @@ def enviar():
         con.commit()
 
 
-    elif accion == 'modificar':
+    elif accion == "modificar":  # actualizar registro existente
         id = request.form['id']
         tipo = request.form['tipo']
         modo = request.form['modo']
-        concepto = request.form['conceptos']
+        conceptos = request.form['conceptos']
         dia = request.form['dia']
         mes = request.form['mes']
         costo = request.form['costo']
 
-        conn = sqlite3.connect('base.db')
-        c = conn.cursor()
-        c.execute("""
-            UPDATE gestion SET tipo=?, modo=?, concepto=?, dia=?, mes=?, costo=? WHERE id=?
-        """, (tipo, modo, concepto, dia, mes, costo, id))
-        conn.commit()
-        conn.close()
-        return redirect(url_for('inicio'))
+        cur.execute("""UPDATE cuentas SET tipo=?, modo=?, conceptos=?, dia=?, mes=?, costo=? WHERE id=?""", (tipo, modo, conceptos, dia, mes, costo, id))
+        con.commit()
 
 
     elif accion == "borrar":

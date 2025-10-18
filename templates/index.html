@@ -50,7 +50,9 @@
             <label>Costo</label>
             <input type="text" name="costo" value="{{ registro_actual[6] if registro_actual else '' }}" placeholder="Costo">
 
-            <button type="submit" name="accion" value="enviar">Enviar</button>
+            <button type="submit" name="accion" value="{{ 'modificar' if registro_actual else 'enviar' }}">
+                {{ 'Modificar' if registro_actual else 'Enviar' }}
+            </button>
         </form>
 <table border="1" cellpadding="5">
     <tr>
@@ -76,12 +78,12 @@
             <form action="{{ url_for('enviar') }}" method="POST" style="display:inline;">
                     <input type="hidden" name="accion" value="borrar">
                     <input type="hidden" name="id" value="{{ fila[0] }}">
-                    <button type="submit" onclick="return confirm('¿Seguro que quieres borrar este registro?');">Borrar</button>
+                    <button type="submit">Borrar</button>
              </form>
         </td>
         <td>
-            <form action="{{url_for('enviar')}}" method="POST">
-                    <input type="hidden" name="accion" value="borrar">
+            <form action="{{url_for('index')}}" method="GET">
+                    <input type="hidden" name="accion" value="modificar">
                     <input type="hidden" name="id" value="{{ fila[0] }}">
                     <button type="submit">editar</button>
             </form>
