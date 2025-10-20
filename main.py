@@ -22,7 +22,6 @@ def index():
     datos = cur.fetchall()
     return render_template("index.html", datos=datos, registro_actual=registro_actual)
 
-
 @app.route("/enviar", methods=['POST'])
 def enviar():
     accion = request.form['accion']
@@ -67,6 +66,5 @@ def enviar():
         con.commit()
 
     return redirect(url_for('index'))
-
 
 app.run(host="localhost", port=4000, debug=True)
