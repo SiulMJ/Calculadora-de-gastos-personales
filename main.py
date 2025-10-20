@@ -38,8 +38,7 @@ def enviar():
         cur.execute('INSERT INTO cuentas (tipo, modo, conceptos, dia, mes, costo) VALUES (?, ?, ?, ?, ?, ?)',
                     (tipo, modo, conceptos, dia, mes, costo))
         con.commit()
-
-
+        
     elif accion == "modificar":  # actualizar registro existente
         id = request.form['id']
         tipo = request.form['tipo']
@@ -51,7 +50,6 @@ def enviar():
 
         cur.execute("""UPDATE cuentas SET tipo=?, modo=?, conceptos=?, dia=?, mes=?, costo=? WHERE id=?""", (tipo, modo, conceptos, dia, mes, costo, id))
         con.commit()
-
 
     elif accion == "borrar":
             cur, con = conection()
